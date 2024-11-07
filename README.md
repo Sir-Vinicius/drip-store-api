@@ -19,4 +19,4 @@ npm run dev
 ```
 Você deve ter um arquivo .env para  configurar o banco de dados e a porta da api. Veja o .exemple.env  para entender como configurar.
 
-Você também deve ter o seu banco rodando para  que a api possa criar as tabelas e realizar as operações.
+Você também deve ter o seu banco rodando para que a api possa criar as tabelas e realizar as operações.

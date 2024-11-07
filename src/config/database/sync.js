@@ -1,5 +1,5 @@
-const connection = require('./config');
-require('../../models/usersModel');
+const connection = require('./connection');
+require('../../models/productModel');
 
 (async () => {
     try {

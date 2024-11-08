@@ -1,6 +1,7 @@
-export const tenisDados = [
+const productModel = require('../models/productModel');
+const connection = require('../config/database/connection')
+const tenisLista = [
   {
-    id: 0,
     nome: "K-Swiss V8 - Masculino",
     nota: 4,
     marca: "Adidas",
@@ -14,7 +15,6 @@ export const tenisDados = [
     backgrounds: ["#E2E3FF", "#FFE8BC", "#FFC0BC", "#DEC699", "#E8DFCF"]
   },
   {
-    id: 1,
     nome: "Tênis Adidas Ultraboost 22 Masculino",
     nota: 5,
     marca: "Adidas",
@@ -28,7 +28,6 @@ export const tenisDados = [
     backgrounds: ["#F0E68C", "#FFD700", "#FF6347", "#4682B4", "#D3D3D3"]
   },
   {
-    id: 2,
     nome: "Tênis Puma Flyer Runner BDP",
     nota: 4.5,
     marca: "Puma",
@@ -42,7 +41,6 @@ export const tenisDados = [
     backgrounds: ["#8A2BE2", "#7FFF00", "#D2691E", "#FF4500", "#2E8B57"]
   },
   {
-    id: 3,
     nome: "Tênis Asics Gel-Kayano 28",
     nota: 4.8,
     marca: "Asics",
@@ -56,7 +54,6 @@ export const tenisDados = [
     backgrounds: ["#98FB98", "#00FA9A", "#00FF7F", "#2E8B57", "#3CB371"]
   },
   {
-    id: 4,
     nome: "Tênis Mizuno Wave Prophecy X",
     nota: 5,
     marca: "Mizuno",
@@ -70,7 +67,6 @@ export const tenisDados = [
     backgrounds: ["#FFD700", "#FFA500", "#FF8C00", "#FF4500", "#DAA520"]
   },
   {
-    id: 5,
     nome: "Tênis New Balance 574",
     nota: 4.3,
     marca: "New Balance",
@@ -84,7 +80,6 @@ export const tenisDados = [
     backgrounds: ["#87CEEB", "#4682B4", "#1E90FF", "#00BFFF", "#5F9EA0"]
   },
   {
-    id: 6,
     nome: "Tênis Reebok Nano X1",
     nota: 4.7,
     marca: "Reebok",
@@ -98,7 +93,6 @@ export const tenisDados = [
     backgrounds: ["#FA8072", "#E9967A", "#F08080", "#CD5C5C", "#8B0000"]
   },
   {
-    id: 7,
     nome: "Tênis Under Armour Charged Commit 3",
     nota: 4.6,
     marca: "Under Armour",
@@ -112,7 +106,6 @@ export const tenisDados = [
     backgrounds: ["#FFC0CB", "#FFB6C1", "#FF69B4", "#FF1493", "#DB7093"]
   },
   {
-    id: 8,
     nome: "Tênis Converse Chuck Taylor All Star",
     nota: 4.9,
     marca: "Converse",
@@ -126,7 +119,6 @@ export const tenisDados = [
     backgrounds: ["#F5F5F5", "#DCDCDC", "#C0C0C0", "#A9A9A9", "#808080"]
   },
   {
-    id: 9,
     nome: "Tênis Vans Old Skool",
     nota: 4.8,
     marca: "Vans",
@@ -140,7 +132,6 @@ export const tenisDados = [
     backgrounds: ["#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9"]
   },
   {
-    id: 10,
     nome: "Tênis Fila Disruptor 2",
     nota: 4.5,
     marca: "Fila",
@@ -154,7 +145,6 @@ export const tenisDados = [
     backgrounds: ["#FF4500", "#FF6347", "#FF7F50", "#FFA07A", "#CD5C5C"]
   },
   {
-    id: 11,
     nome: "Tênis Skechers Go Walk 5",
     nota: 4.9,
     marca: "Skechers",
@@ -168,7 +158,6 @@ export const tenisDados = [
     backgrounds: ["#FFD700", "#DAA520", "#B8860B", "#FF8C00", "#FFA500"]
   },
   {
-    id: 12,
     nome: "Tênis Saucony Kinvara 12",
     nota: 4.7,
     marca: "Saucony",
@@ -182,7 +171,6 @@ export const tenisDados = [
     backgrounds: ["#AFEEEE", "#7FFFD4", "#66CDAA", "#5F9EA0", "#4682B4"]
   },
   {
-    id: 13,
     nome: "Tênis Brooks Ghost 14",
     nota: 4.6,
     marca: "Brooks",
@@ -196,7 +184,6 @@ export const tenisDados = [
     backgrounds: ["#9370DB", "#8A2BE2", "#4B0082", "#6A5ACD", "#483D8B"]
   },
   {
-    id: 14,
     nome: "Tênis Hoka One One Clifton 8",
     nota: 4.8,
     marca: "Hoka One One",
@@ -210,7 +197,6 @@ export const tenisDados = [
     backgrounds: ["#FF6347", "#FF4500", "#FF7F50", "#FF8C00", "#FFD700"]
   },
   {
-    id: 15,
     nome: "Tênis Nike Revolution 6 Next Nature Masculino",
     nota: 4,
     marca: "Nike",
@@ -224,3 +210,18 @@ export const tenisDados = [
     backgrounds: ["#E2E3FF", "#FFE8BC", "#FFC0BC", "#DEC699", "#E8DFCF"]
   }
 ];
+
+async function seedProduct() {
+  try {
+    await connection.sync({ alter: true });
+    await productModel.bulkCreate(tenisLista);
+
+    console.log('Data seeded successfully!');
+  } catch (error) {
+    console.error('Error seeding data:', error);
+  } finally {
+    await connection.close();
+  }
+}
+
+seedProduct();

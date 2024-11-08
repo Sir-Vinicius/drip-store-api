@@ -9,15 +9,19 @@ const productModel = connection.define('products',
     },
     nota: {
       type: DataTypes.FLOAT,
+      allowNull: false
     },
     marca: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     modelo: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     referencia: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     preco_original: {
       type: DataTypes.FLOAT,
@@ -32,15 +36,15 @@ const productModel = connection.define('products',
       allowNull: false, 
     },
     cores: {
-      type: DataTypes.JSONB, // Usamos JSONB para armazenar um array de valores
+      type: DataTypes.ARRAY(DataTypes.STRING), 
       allowNull: false, 
     },
     tamanhos: {
-      type: DataTypes.JSONB,  
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: false, 
     },
     backgrounds: {
-      type: DataTypes.JSONB,  
+      type: DataTypes.ARRAY(DataTypes.STRING),  
       allowNull: false,  
     },
   },
@@ -48,12 +52,4 @@ const productModel = connection.define('products',
 
 module.exports  = productModel
 
-// // Exemplo de uso: Sincronizar a tabela com o banco de dados
-// sequelize.sync()
-//   .then(() => {
-//     console.log('Tabela "produtos" criada com sucesso!');
-//   })
-//   .catch(err => {
-//     console.error('Erro ao criar tabela: ', err);
-//   });
 

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.js",
-    "db": "nodemon src/config/database/sync.js"
+    "db": "nodemon src/config/database/sync.js",
+    "seed-products": "nodemon src/seeders/products.js"
   },
   "keywords": [],
   "author": "",

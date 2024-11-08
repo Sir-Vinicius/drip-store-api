@@ -3,53 +3,45 @@ const connection = require('../config/database/connection');
 
 const productModel = connection.define('products',
   {
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false, 
+    enabled: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true, 
+      defaultValue: false
     },
-    nota: {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    // Armazena o slug do produto
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    // Define se o produto pode ser exibida no menu
+    use_in_menu: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
+    },
+    // Quantidade de produto disponível
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    price: {
       type: DataTypes.FLOAT,
       allowNull: false
     },
-    marca: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    modelo: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    referencia: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    preco_original: {
+    price_with_discount: {
       type: DataTypes.FLOAT,
-      allowNull: false, 
-    },
-    preco_desconto: {
-      type: DataTypes.FLOAT,
-      allowNull: false,  
-    },
-    imagem_url: {
-      type: DataTypes.STRING,
-      allowNull: false, 
-    },
-    cores: {
-      type: DataTypes.ARRAY(DataTypes.STRING), 
-      allowNull: false, 
-    },
-    tamanhos: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      allowNull: false, 
-    },
-    backgrounds: {
-      type: DataTypes.ARRAY(DataTypes.STRING),  
-      allowNull: false,  
-    },
+      allowNull: false
+    }
   },
 );
 
 module.exports  = productModel
-
-

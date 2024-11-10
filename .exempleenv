@@ -1,8 +1,0 @@
-JWT_SECRET = 'sua senha jswt'
-PORT='porta da aplicação'
-DB_DRIVER='MySQL, PostgreSQL, SQLite, etc'
-DB_NAME='banco nickname'
-DB_HOST='host do banco de dados'
-DB_PORT='porta de acesso do banco'
-DB_USER='usuario do banco'
-DB_PASSWORD='senha do banco'

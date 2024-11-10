@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js",
-    "db": "nodemon src/config/database/sync.js"
+    "dev": "nodemon src/app.js",
+    "db": "nodemon src/config/database/sync.js",
+    "seed-products": "nodemon src/seeders/products.js"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +20,8 @@
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }

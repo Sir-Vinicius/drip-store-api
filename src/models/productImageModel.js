@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
 const productModel = require('./productModel');
 
-const productImagesModel = connection.define('products_images',
+const productImageModel = connection.define('products_images',
   {
     productId: {
       type: DataTypes.INTEGER,
@@ -25,6 +25,6 @@ const productImagesModel = connection.define('products_images',
   },
 );
 
-module.exports = productImagesModel
+module.exports = productImageModel
 
 

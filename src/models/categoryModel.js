@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
 
-const categorieModel = connection.define('categories',
+const categoryModel = connection.define('categories',
   {
     //Coluna do tipo STRING e de preenchimento obrigatório que armazena o nome da categoria
     name: {
@@ -21,6 +21,6 @@ const categorieModel = connection.define('categories',
   },
 );
 
-module.exports = categorieModel
+module.exports = categoryModel
 
 

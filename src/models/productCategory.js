@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
 const productModel = require('./productModel');
-const categorieModel = require('./categorieModel')
-const productCategoriesModel = connection.define('product_options', 
+const categoryModel = require('./categoryModel')
+const productCategoryModel = connection.define('products_categories', 
   { 
     product_id: {
       type: DataTypes.INTEGER,
@@ -23,4 +23,4 @@ const productCategoriesModel = connection.define('product_options',
   },
 );
 
-module.exports = productCategoriesModel;
+module.exports = productCategoryModel;

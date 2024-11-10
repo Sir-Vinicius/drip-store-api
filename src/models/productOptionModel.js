@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
 const productModel = require('./productModel');
 
-const productOptionsModel = connection.define('product_options', 
+const productOptionModel = connection.define('products_options', 
   { 
     // Chave estrangeira que faz referência à tabela de produtos
     productId: {
@@ -49,4 +49,4 @@ const productOptionsModel = connection.define('product_options',
   },
 );
 
-module.exports = productOptionsModel;
+module.exports = productOptionModel;

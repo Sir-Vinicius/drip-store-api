@@ -40,6 +40,22 @@ const productModel = connection.define('products',
     price_with_discount: {
       type: DataTypes.FLOAT,
       allowNull: false
+    },
+    mark: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    model: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    colors: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
+    },
+    backgrounds: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
     }
   },
 );

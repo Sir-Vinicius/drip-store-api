@@ -1,23 +1,25 @@
-const userModel = require('../models/userModel');
+const userServices = require('../services/userServices')
 
-const getById = async (req, res) => {
-  try {
-    const { id } = req.params
+const getUser = async (req, res) => {
+  const { user } = req
+  return res.status(200).json(user);
+}
 
-    const user = await userModel.findByPk(Number(id))
-    console.log(user)
-    return res.status(200).json(user)
-  } catch(error) {
-    return res.status(404)
+const registerUser = async (req, res) => {
+  const user = await userServices.createUser(req.body);
+
+  if (!user) {
+    return res.status(500).json('Erro no servidor')
   }
+  return res.status(201).json(user);
 }
 
-const create = async (req, res) => {
-
-  const user = await userModel.create({...req.body})
-  res.status(201).json(user)
-}
+// const editUser = async (req, res) => {
+//   const id = Number(req.body.id)
+//   const updatedUser = await userServices.updateUser(id, req.body);
+//   return res.status(200).json(updatedUser);
+// }
 
 module.exports = {
-  create, getById
-}
+  registerUser, getUser, editUser
+} 

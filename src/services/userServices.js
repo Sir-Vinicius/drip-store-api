@@ -1,13 +1,6 @@
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
-
-const getById = async (id) => {
-  const user = await userModel.findByPk(id, {
-    attributes: ['id', 'firstname', 'surname', 'email'] 
-  });
-
-  return user ? user.toJSON() : null;
-}
+const { generateToken } = require('../validation/tokenUtils'); 
 
 const getByEmail = async (userEmail) => {
   return await userModel.findOne({
@@ -17,26 +10,58 @@ const getByEmail = async (userEmail) => {
   })
 }
 
-const createUser = async (userData) => {
+const createUserLogic = async (userData) => {
   const hashedPassword = await bcrypt.hash(userData.password, 10);
   const newUser = await userModel.create({
     ...userData,
     password: hashedPassword
   });
-  return newUser;
+  const token = generateToken(newUser);
+  return { newUser, token };
 }
 
-const updateUser = async (id, userData) => {
-  const user = await userModel.findByPk(id); 
-  if (userData.password) {
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    userData.password = hashedPassword;
+const updateUserLogic = async (id, { firstname, surname, email, password }) => {
+  try {
+    const user = await userModel.findByPk(id);
+
+    if (!user) {
+      throw new Error('Usuário não encontrado');
+    }
+
+    if (password) {
+      const hashedNewPassword = await bcrypt.hash(password, 10);
+      user.password = hashedNewPassword; 
+    }
+
+    user.firstname = firstname || user.firstname;  
+    user.surname = surname || user.surname;        
+    user.email = email || user.email;             
+
+    await user.save();
+
+    return user;  
+  } catch (error) {
+    throw error; 
   }
-  user.set({...userData})
-  user.save();
-}
+};
 
+const authenticateUser = async (email, password) => {
+  const user = await getByEmail(email)
+
+  if (!user) {
+    throw new Error('Usuário não encontrado.');
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  
+  if (!isPasswordCorrect) {
+    throw new Error('Email ou senha incorretos');
+  }
+
+  const token = generateToken(user);
+  return { user, token };
+};
 
 module.exports = {
-  getById, createUser, getByEmail, updateUser
+  createUserLogic, getByEmail, updateUserLogic, authenticateUser
 }

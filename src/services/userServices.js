@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
-const { generateToken } = require('../validation/tokenUtils'); 
+const { generateToken } = require('../utils/tokenUtils'); 
+const { object } = require('joi');
 
 const getByEmail = async (userEmail) => {
   return await userModel.findOne({
@@ -11,16 +12,19 @@ const getByEmail = async (userEmail) => {
 }
 
 const createUserLogic = async (userData) => {
-  const hashedPassword = await bcrypt.hash(userData.password, 10);
+  const { firstname, surname, email, password } = userData;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const newUser = await userModel.create({
-    ...userData,
+    firstname,
+    surname,
+    email,
     password: hashedPassword
   });
-  const token = generateToken(newUser);
-  return { newUser, token };
+  return newUser;
 }
 
-const updateUserLogic = async (id, { firstname, surname, email, password }) => {
+const updateUserLogic = async (id, firstname, surname, email, password) => {
   try {
     const user = await userModel.findByPk(id);
 
@@ -28,18 +32,37 @@ const updateUserLogic = async (id, { firstname, surname, email, password }) => {
       throw new Error('Usuário não encontrado');
     }
 
-    if (password) {
-      const hashedNewPassword = await bcrypt.hash(password, 10);
-      user.password = hashedNewPassword; 
+    const updates = {}
+
+    if (email && user.email !== email) {
+      const existingUser = await getByEmail(email)
+      if (existingUser) {
+        throw new Error('E-mail já esta sendo utulizado');
+      }
+      updates.email = email       
     }
 
-    user.firstname = firstname || user.firstname;  
-    user.surname = surname || user.surname;        
-    user.email = email || user.email;             
+    if (password) {
+      const hashedNewPassword = await bcrypt.hash(password, 10);
+      updates.password = hashedNewPassword; 
+    }
 
-    await user.save();
+    if (firstname) {
+      updates.firstname = firstname;
+    }
 
-    return user;  
+    if (surname) {
+      updates.surname = surname;
+    }
+
+    if(Object.keys(updates).length > 0) {
+      await user.update(updates);
+    }
+
+    const userWithoutPassword = { ...user};
+    delete userWithoutPassword.password;
+    return userWithoutPassword;
+
   } catch (error) {
     throw error; 
   }

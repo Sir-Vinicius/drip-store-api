@@ -38,6 +38,11 @@ const createSchema = Joi.object({
   password: Joi.string()
     .min(6) 
     .required()
+    .messages({
+      'string.min': 'senha deve ter pelo menos 6 caracteres', 
+      'string.empty': 'Insira sua senha', 
+      'any.required': 'senha é um campo obrigatório' 
+    })
 })
 
 const loginSchema = Joi.object({

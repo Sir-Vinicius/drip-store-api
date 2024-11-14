@@ -51,13 +51,13 @@ const get = async (req, res) => {
     const params = {
       limit: limit === undefined ? -1 : parseInt(limit), 
       page: page || 1,          
-      fields: fields || 'name,price', 
+      fields: fields || 'id,name,price,price_with_discount,mark,colors',
       price_range: price_range || '', 
     };
 
     const result = await productServices.searchProductsLogic(params);
 
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
 
     console.error('Error in searchProductsController:', error);

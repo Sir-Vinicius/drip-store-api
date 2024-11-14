@@ -1,7 +1,6 @@
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/tokenUtils'); 
-const { object } = require('joi');
 
 const getByEmail = async (userEmail) => {
   return await userModel.findOne({

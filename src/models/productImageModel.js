@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
-const productModel = require('./userModel');
 
 const productImageModel = connection.define('products_images',
   {
@@ -8,7 +7,7 @@ const productImageModel = connection.define('products_images',
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: productModel,
+        model: 'products',
         key: 'id'
       }
     },
@@ -24,8 +23,6 @@ const productImageModel = connection.define('products_images',
     },
   },
 );
-
-productImageModel.belongsTo(productModel, { foreignKey: 'productId' });
 
 module.exports = productImageModel
 

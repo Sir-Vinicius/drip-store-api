@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const productModel = require('../models/productModel');
-
+const productImageModel = require('../models/productImageModel');
+const { required } = require('joi');
 const searchProductsLogic = async (params) => {
   try {
     const {
@@ -14,7 +15,14 @@ const searchProductsLogic = async (params) => {
 
     const query = {
       attributes: fieldsArray,
-      include: [],
+      include: [
+        {
+          model: productImageModel, // Include product images
+          as: 'images', // The alias used in the associations
+          attributes: ['path'],
+          require: false
+        }
+      ],
       where: {},
       offset: (page - 1) * limit,
       limit: limit == -1 ? undefined : limit,

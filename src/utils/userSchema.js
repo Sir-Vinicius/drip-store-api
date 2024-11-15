@@ -1,13 +1,11 @@
 const Joi = require('joi');
-
-const lettersWithAccentsRegex = new RegExp('^[a-zA-ZáàäâãåÁÀÄÂÃÅéèëêÉÈËÊíìïîÍÌÏÎóòöôõÓÒÖÔÕúùüûÚÙÜÛñÑ]+$');
-
+const nameRegex = /^[A-Za-zÀ-ÿа-яА-ЯґєіїЇЄа-яёЁ]+(?: [A-Za-zÀ-ÿа-яА-ЯґєіїЇЄа-яёЁ]+)*$/;
 const createSchema = Joi.object({
   firstname: Joi.string()
     .min(1)
     .max(20)
     .required()
-    .pattern(lettersWithAccentsRegex)
+    .pattern(nameRegex)
     .messages({
       'string.pattern.base': 'O primeiro nome deve conter apenas letras e acentos válidos.',
       'any.required': 'O primeiro nome é obrigatório.',
@@ -19,7 +17,7 @@ const createSchema = Joi.object({
     .min(1)
     .max(20)
     .required()
-    .pattern(lettersWithAccentsRegex)
+    .pattern(nameRegex)
     .messages({
       'string.pattern.base': 'O sobrenome nome deve conter apenas letras e acentos válidos.',
       'any.required': 'O sobrenome nome é obrigatório.',

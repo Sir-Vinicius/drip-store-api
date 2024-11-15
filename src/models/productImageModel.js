@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
-const productModel = require('./productModel');
+const productModel = require('./userModel');
 
 const productImageModel = connection.define('products_images',
   {
@@ -24,6 +24,8 @@ const productImageModel = connection.define('products_images',
     },
   },
 );
+
+productImageModel.belongsTo(productModel, { foreignKey: 'productId' });
 
 module.exports = productImageModel
 

@@ -3,6 +3,8 @@ require('../../models/productModel');
 require('../../models/userModel');
 require('../../models/productImageModel');
 require('../../models/categoryModel');
+require('../../models/optionModel');
+
 (async () => {
     try {
         // Testa conexão com banco de dados.

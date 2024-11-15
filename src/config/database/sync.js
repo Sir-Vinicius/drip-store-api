@@ -3,8 +3,6 @@ const user = require('../../models/userModel');
 const productModel = require('../../models/productModel');
 const productImageModel = require('../../models/productImageModel');
 
-// Define your associations
-
 (async () => {
     try {
         // Testa conexão com banco de dados.

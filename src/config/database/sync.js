@@ -1,9 +1,7 @@
 const connection = require('./connection');
-require('../../models/productModel');
-require('../../models/userModel');
-require('../../models/productImageModel');
-require('../../models/categoryModel');
-require('../../models/optionModel');
+const user = require('../../models/userModel');
+const productModel = require('../../models/productModel');
+const productImageModel = require('../../models/productImageModel');
 
 (async () => {
     try {
@@ -11,7 +9,9 @@ require('../../models/optionModel');
         await connection.authenticate();
         console.log('Conexão com o banco estabelecida com sucesso!')
         // Sincroniza os Modelos com o banco de dados.
+        
         await connection.sync({alter:true})
+        
         console.log('Modelos sincronizados com sucesso!')
     } catch (error) {
         console.log('Erro ao conectar ou sincronizar com o banco de dados:  ', error)

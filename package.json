@@ -8,7 +8,7 @@
     "dev": "nodemon src/app.js",
     "db": "nodemon src/config/database/sync.js",
     "seed-products": "nodemon src/seeders/productsSeed.js",
-     "seed-products-images": "nodemon src/seeders/productsImageSeed.js"
+    "seed-products-images": "nodemon src/seeders/productsImageSeed.js"
   },
   "keywords": [],
   "author": "",

@@ -1,4 +1,5 @@
-const productImageModel = require('../models/productImageModel')
+const Image = require('../models/productImageModel');
+const Product = require('../models/productModel');
 const imageUrls = [
   "https://i.ibb.co/XZzRvBJ/Layer-1aa-2.png",
   "https://cdn.awsli.com.br/600x450/1621/1621592/produto/178661445/fbaf991a78bc4896a3e9ad7800abcec6_9366-sugbwn-g7y1qcudzg.png",
@@ -15,25 +16,41 @@ const imageUrls = [
   "https://www.rodrigoroehniss.com.br/wp-content/uploads/2021/01/Saucony_Kinvara_12_Site-removebg-preview.png",
   "https://www.brooksrunning.com/on/demandware.static/-/Sites-brooks-master-catalog/default/dw7f053f2b/original/120356/120356-531-l-ghost-14-womens-cushion-running-shoe.png",
   "https://i.ibb.co/Jysdmz6/White-Sneakers-PNG-Clipart-2.png",
-  "https://sportamore.com/cdn/shop/products/60457-83_006.png?v=1680751838&width=720"
+  "https://sportamore.com/cdn/shop/products/60457-83_006.png?v=1680751838&width=720",
+  "https://i5.walmartimages.com/seo/Skechers-Women-s-Summits-Fresh-Impression-Wide-Width-Available_21d6d3e1-8ba0-4240-9db1-a1676e174c94.970f4f1c03363d7937e9f755bfa1b363.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF",
+  "https://i5.walmartimages.com/seo/Reebok-Flexagon-Force-4-Men-s-Training-Shoes_77f66c48-0a2e-4fdd-bc11-5df23f415711.3836ce9f512898f510a80e722b64cecd.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+  "https://i5.walmartimages.com/seo/Reebok-Flexagon-Energy-4-Men-s-Training-Shoes_d471c3d7-021b-48a5-a393-100eed46d379.5eb1d1074e13ebda7095a100d4045c4e.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF"
 ]
-const seedProductImages = async () => {
+
+const seedImages = async () => {
   try {
-    for (let i = 0; i < imageUrls.length; i++) {
-      const imageUrl = imageUrls[i];
-      const productId = i + 1; 
-      
-      await productImageModel.create({
-        productId: productId,      
-        enabled: true,            
-        path: imageUrl          
-      });
-      
-      console.log(`Imagem do produto ${productId} inserida com sucesso!`);
+    const products = await Product.findAll();
+
+    if (!products.length) {
+      console.error('Nenhum produto encontrado no banco de dados!');
+      return;
     }
+
+    if (imageUrls.length > products.length) {
+      console.warn('Existem mais imagens do que produtos. Algumas imagens serão ignoradas.');
+    }
+    const seedData = [];
+    for (const product of products) {    
+      for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * imageUrls.length);
+        seedData.push({
+          productId: product.id,
+          path: imageUrls[randomIndex],
+        });
+      }
+    }
+    
+    await Image.bulkCreate(seedData);
+    console.log('Imagens dos produtos cadastradas com sucesso!');
+    console.log('');
   } catch (error) {
-    console.error('Erro ao inserir imagens:', error);
+    console.error('Erro ao cadastrar imagens dos produtos:', error);
   }
 };
 
-seedProductImages();
+seedImages()

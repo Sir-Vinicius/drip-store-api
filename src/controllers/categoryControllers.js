@@ -157,10 +157,7 @@ const updateCategory = async (req, res) => {
 
     await category.save();
 
-    return res.status(204).json({
-      message: "Categoria atualizada com sucesso.",
-      category
-    });
+    return res.status(204)
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Erro interno do servidor." });

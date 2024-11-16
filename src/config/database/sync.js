@@ -1,8 +1,8 @@
 const connection = require('./connection');
-const user = require('../../models/userModel');
-const productModel = require('../../models/productModel');
-const productImageModel = require('../../models/productImageModel');
-
+require('../../models/userModel');
+require('../../models/productModel');
+require('../../models/productImageModel');
+require('../../models/categoryModel');
 (async () => {
     try {
         // Testa conexão com banco de dados.

@@ -1,7 +1,6 @@
 const { Op } = require('sequelize');
 const productModel = require('../models/productModel');
 const productImageModel = require('../models/productImageModel');
-const { required } = require('joi');
 const searchProductsLogic = async (params) => {
   try {
     const {

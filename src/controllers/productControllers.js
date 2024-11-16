@@ -21,17 +21,6 @@ const create = async (req, res) => {
   }
 }
 
-const getAll = async(req, res) => {
-  try {
-    const productsList = await productModel.findAll();
-    res.status(200).send(productsList)
-  } catch (error) {
-    res.status(500).send({
-      message: error.message
-    })
-  }
-}
-
 const getById = async(req, res) => {
   try{
     const id = req.params.id;
@@ -44,7 +33,7 @@ const getById = async(req, res) => {
   }
 }
 
-const get = async (req, res) => {
+const getAll = async (req, res) => {
   try {
     const { limit, page, fields, price_range } = req.query;
 
@@ -67,5 +56,5 @@ const get = async (req, res) => {
 
 
 module.exports = {
-  create, getAll, getById, get
+  create, getAll, getById
 }

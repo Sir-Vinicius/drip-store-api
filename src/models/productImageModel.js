@@ -9,7 +9,8 @@ const productImageModel = connection.define('products_images',
       references: {
         model: 'products',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
     },
     enabled: {
       type: DataTypes.BOOLEAN,

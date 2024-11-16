@@ -1,6 +1,5 @@
 const categoryController = require('../controllers/categoryControllers');
 const { authenticateToken } = require('../middlewares/userMiddleware');
-const { authenticateUser } = require('../services/userServices');
 
 const categoryRouter = require('express').Router();
 

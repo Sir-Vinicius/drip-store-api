@@ -1,3 +1,4 @@
+const productImageModel = require("../models/productImageModel");
 const productModel = require("../models/productModel")
 const productServices = require('../services/productServices')
 const create = async (req, res) => {
@@ -24,7 +25,18 @@ const create = async (req, res) => {
 const getById = async(req, res) => {
   try{
     const id = req.params.id;
-    const product = await productModel.findByPk(Number(id));
+    const product = await productModel.findByPk(Number(id), {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      },
+      include: [{
+        model: productImageModel,
+        as: 'images',
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        }
+      }]
+    });
     res.status(200).send(product);
   } catch (error) {
     res.status(500).send({
@@ -54,7 +66,43 @@ const getAll = async (req, res) => {
   }
 };
 
+const updateProduct = async (req, res) => {
+  const productId = parseInt(req.params.id);
+
+  const {
+    enabled,
+    name,
+    slug,
+    stock,
+    description,
+    price,
+    price_with_discount,
+    images,
+  } = req.body;
+
+  const productData = {
+    enabled,
+    name,
+    slug,
+    stock,
+    description,
+    price,
+    price_with_discount,
+  };
+
+  try {
+    const result = await productServices.updateProductLogic(productId, productData, images);
+    return res.status(200).json({ message: 'Product alterado com sucesso', data: result });
+  } catch (error) {
+    if (error.status) {
+      return res.status(error.status).json({ error: error.message});
+    }
+    return res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+
+}
+
 
 module.exports = {
-  create, getAll, getById
+  create, getAll, getById, updateProduct
 }

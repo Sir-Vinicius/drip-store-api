@@ -44,9 +44,59 @@ const searchProductsLogic = async (params) => {
       page
     };
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Erro ao buscar produtos', error);
     throw error;
   }
 };
 
-module.exports = { searchProductsLogic };
+const updateImages = async(productId, images) => {
+  for (const image of images) {
+    if (image.deleted) {
+      await productImageModel.destroy({ where: { id: image.id, productId } });
+    }
+    
+    else if (image.id) {
+      await productImageModel.update(
+        { path: image.path },
+        { where: { id: image.id, productId } }
+      );
+    }
+
+    else {
+      await productImageModel.create({
+        productId,
+        path: image.content,
+      });
+    }
+  }
+}
+
+const updateProductLogic = async (productId, productData, images) => {
+  try {
+    const product = await productModel.findByPk(productId, {
+      include: { model: productImageModel, as: 'images' },
+    });
+
+    if (!product) {
+      throw { status: 404, message: 'Produto não encontrado' };
+    }
+
+    if (productData.price < 0) {
+      throw { status: 400, message: 'Preço deve ser um valor válido' };
+    }
+
+    await product.update(productData);
+    
+    if (Array.isArray(images)) {
+      await updateImages(productId, images);
+    }
+
+    return product;
+
+  } catch (error) {
+    console.error('Erro ao editar produtos', error);
+    throw error
+  }
+}
+
+module.exports = { searchProductsLogic, updateProductLogic };

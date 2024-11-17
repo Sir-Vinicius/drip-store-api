@@ -7,6 +7,7 @@ productRouter.post('/', authenticateToken, productController.create);
 productRouter.put('/:id', authenticateToken, productController.updateProduct);
 productRouter.get('/',  productController.getAll);
 productRouter.get('/:id',  productController.getById);
+productRouter.delete('/id', authenticateToken, productController.deleteProduct)
 
 
 

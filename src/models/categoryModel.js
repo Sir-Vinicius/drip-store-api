@@ -19,6 +19,7 @@ const categoryModel = connection.define('categories',
       allowNull: true,
       defaultValue: true
     },
+
   },
 );
 

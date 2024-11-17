@@ -47,13 +47,14 @@ const getById = async(req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const { limit, page, fields, price_range } = req.query;
+    const { limit, page, fields, price_range, mark } = req.query;
 
     const params = {
       limit: limit === undefined ? -1 : parseInt(limit), 
       page: page || 1,          
       fields: fields || 'id,name,price,price_with_discount,mark,colors',
       price_range: price_range || '', 
+      mark: mark || ''
     };
 
     const result = await productServices.searchProductsLogic(params);
@@ -99,10 +100,29 @@ const updateProduct = async (req, res) => {
     }
     return res.status(500).json({ error: 'Erro interno do servidor' });
   }
-
 }
+
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    
+    const product = await productModel.findByPk(Number(id));
+
+    if (!product) {
+      return res.status(404).json({ message: "Produto não encontrado." });
+    }
+
+    await product.destroy();
+
+    return res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
 
 
 module.exports = {
-  create, getAll, getById, updateProduct
+  create, getAll, getById, updateProduct, deleteProduct
 }

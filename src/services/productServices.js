@@ -8,6 +8,7 @@ const searchProductsLogic = async (params) => {
       page,
       fields,
       price_range,
+      mark
     } = params;
 
     const fieldsArray = fields.split(',');
@@ -16,8 +17,8 @@ const searchProductsLogic = async (params) => {
       attributes: fieldsArray,
       include: [
         {
-          model: productImageModel, // Include product images
-          as: 'images', // The alias used in the associations
+          model: productImageModel, 
+          as: 'images',
           attributes: ['path'],
           require: false
         }
@@ -35,7 +36,15 @@ const searchProductsLogic = async (params) => {
       };
       query.order.push(['price', 'ASC']);
     }
-    const result = await productModel.findAndCountAll(query);
+
+    if (mark) {
+      query.where.mark = mark
+    }
+    
+    const result = await productModel.findAndCountAll({
+      ...query, 
+      distinct: true
+    });
 
     return {
       data: result.rows,

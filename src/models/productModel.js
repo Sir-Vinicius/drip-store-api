@@ -56,13 +56,26 @@ const productModel = connection.define('products',
     backgrounds: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
-    }
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'categories',
+        key: 'id',
+      },
+    },
   },
 );
 
 productModel.hasMany(require('./productImageModel'), {
   foreignKey: 'productId',
   as: 'images',  
+});
+
+productModel.belongsTo(require('./categoryModel'), { 
+  foreignKey: 'categoryId', 
+  as: 'category',
 });
 
 module.exports  = productModel

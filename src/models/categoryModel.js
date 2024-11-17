@@ -23,6 +23,8 @@ const categoryModel = connection.define('categories',
   },
 );
 
+
+
 module.exports = categoryModel
 
 

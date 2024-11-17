@@ -75,6 +75,7 @@ const updateProduct = async (req, res) => {
     name,
     slug,
     stock,
+    mark,
     description,
     price,
     price_with_discount,
@@ -89,6 +90,7 @@ const updateProduct = async (req, res) => {
     description,
     price,
     price_with_discount,
+    mark
   };
 
   try {

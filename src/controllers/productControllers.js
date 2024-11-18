@@ -1,6 +1,6 @@
-const productImageModel = require("../models/productImageModel");
 const productModel = require("../models/productModel")
 const productServices = require('../services/productServices')
+const { commonIncludes }  = require('../services/productServices');
 const create = async (req, res) => {
   try {
     const product = await productModel.create({
@@ -29,13 +29,7 @@ const getById = async(req, res) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt']
       },
-      include: [{
-        model: productImageModel,
-        as: 'images',
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        }
-      }]
+      include: commonIncludes
     });
     res.status(200).send(product);
   } catch (error) {
@@ -126,5 +120,5 @@ const deleteProduct = async (req, res) => {
 
 
 module.exports = {
-  create, getAll, getById, updateProduct, deleteProduct
+  create, getAll, getById, updateProduct, deleteProduct, commonIncludes
 }

@@ -1,6 +1,28 @@
 const { Op } = require('sequelize');
 const productModel = require('../models/productModel');
 const productImageModel = require('../models/productImageModel');
+const categoryModel = require('../models/categoryModel');
+
+const commonIncludes = [
+  {
+    model: productImageModel,
+    as: 'images',
+    attributes: ['path', 'id'],
+    required: false
+  },
+  {
+    model: categoryModel,
+    as: 'categories',
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
+    through: {
+      attributes: []
+    }
+  }
+];
+
+
 const searchProductsLogic = async (params) => {
   try {
     const {
@@ -15,14 +37,7 @@ const searchProductsLogic = async (params) => {
 
     const query = {
       attributes: fieldsArray,
-      include: [
-        {
-          model: productImageModel, 
-          as: 'images',
-          attributes: ['path', 'id'],
-          require: false
-        }
-      ],
+      include: commonIncludes,
       where: {},
       offset: (page - 1) * limit,
       limit: limit == -1 ? undefined : limit,
@@ -108,4 +123,4 @@ const updateProductLogic = async (productId, productData, images) => {
   }
 }
 
-module.exports = { searchProductsLogic, updateProductLogic };
+module.exports = { searchProductsLogic, updateProductLogic, commonIncludes };

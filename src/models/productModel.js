@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
-
 const productModel = connection.define('products',
   {
     enabled: {
@@ -56,7 +55,7 @@ const productModel = connection.define('products',
     backgrounds: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
-    }
+    },
   },
 );
 

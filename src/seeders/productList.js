@@ -1,3 +1,5 @@
+const productModel = require("../models/productModel");
+
 const productList = [
   {
     name: "K-Swiss V8 - Masculino",

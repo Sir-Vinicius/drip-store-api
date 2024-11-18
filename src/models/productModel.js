@@ -60,4 +60,9 @@ const productModel = connection.define('products',
   },
 );
 
+productModel.hasMany(require('./productImageModel'), {
+  foreignKey: 'productId',
+  as: 'images',  
+});
+
 module.exports  = productModel

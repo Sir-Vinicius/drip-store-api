@@ -8,7 +8,7 @@ const createSchema = Joi.object({
     .min(1)
     .max(20)
     .required()
-    .pattern(lettersWithAccentsRegex)
+    .pattern(surNameRegex)
     .messages({
       'string.pattern.base': 'O primeiro nome deve conter apenas letras e acentos válidos.',
       'any.required': 'O primeiro nome é obrigatório.',

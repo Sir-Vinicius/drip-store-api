@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
+const productModel = require('./productModel');
+const productImageModel = require('./productImageModel');
 
 const userModel = connection.define('users',
   {
@@ -21,6 +23,8 @@ const userModel = connection.define('users',
     },
   },
 );
+
+
 
 module.exports = userModel
 

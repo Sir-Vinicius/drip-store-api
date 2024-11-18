@@ -10,7 +10,8 @@ const productCategoryModel = connection.define('products_categories',
       references: {
         model: productModel,
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
     },
     category_id: {
       type: DataTypes.INTEGER,
@@ -18,7 +19,8 @@ const productCategoryModel = connection.define('products_categories',
       references: {
         model: categoryModel,
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
     }
   },
 );

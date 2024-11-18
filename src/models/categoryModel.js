@@ -16,7 +16,8 @@ const categoryModel = connection.define('categories',
     // Coluna do tipo BOOLEAN e de preenchimento opcional que define se a categoria pode ser exibida no menu. Valor padrão deve ser 0.
     use_in_menu: {
       type: DataTypes.BOOLEAN,
-      allowNull: true
+      allowNull: true,
+      defaultValue: true
     },
   },
 );

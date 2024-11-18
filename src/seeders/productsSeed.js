@@ -5,7 +5,7 @@ const products = require('./productList');
 async function seedProduct() {
   try {
     await connection.sync({ alter: true });
-    await productModel.bulkCreate(tenisLista);
+    await productModel.bulkCreate(products);
 
     console.log('Data seeded successfully!');
   } catch (error) {
@@ -14,5 +14,4 @@ async function seedProduct() {
     await connection.close();
   }
 }
-
-console.log(products[2]);
+seedProduct();

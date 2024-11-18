@@ -19,7 +19,7 @@ const searchProductsLogic = async (params) => {
         {
           model: productImageModel, 
           as: 'images',
-          attributes: ['path'],
+          attributes: ['path', 'id'],
           require: false
         }
       ],

@@ -64,4 +64,10 @@ productModel.hasMany(require('./productImageModel'), {
   as: 'images',  
 });
 
+const categoryModel = require('./categoryModel')
+
+productModel.belongsToMany(categoryModel, { through: 'products_categories' })
+categoryModel.belongsToMany(productModel, { through: 'products_categories' });
+
+
 module.exports  = productModel

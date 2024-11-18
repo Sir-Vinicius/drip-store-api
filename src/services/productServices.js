@@ -98,7 +98,7 @@ const updateImages = async(productId, images) => {
 const updateProductLogic = async (productId, productData, images) => {
   try {
     const product = await productModel.findByPk(productId, {
-      include: { model: productImageModel, as: 'images' },
+      include: commonIncludes
     });
 
     if (!product) {

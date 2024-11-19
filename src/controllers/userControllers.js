@@ -67,8 +67,8 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const { token } = await userServices.authenticateUser(email, password);
-    res.status(200).json({ message: 'Login com sucesso', token });
+    const { token, user } = await userServices.authenticateUser(email, password);
+    res.status(200).json({ message: 'Login com sucesso', token, user });
 
   } catch (error) {
     if (error.message === 'Usuário não encontrado') {

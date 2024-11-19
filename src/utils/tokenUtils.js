@@ -16,8 +16,8 @@ const verifyToken = (token) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET); 
     console.log('Decoded JWT:', decoded);
     return decoded;
-  } catch (err) {
-    console.error('Token verification failed:', err);
+  } catch (error) {
+    console.error('Token verification failed:', error);
     throw new Error('Invalid or expired token');
   }
 };

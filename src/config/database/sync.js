@@ -5,7 +5,6 @@ require('../../models/productImageModel');
 require('../../models/categoryModel');
 require('../../models/optionModel');
 require('../../models/productCategory');
-
 (async () => {
     try {
         // Testa conexão com banco de dados.

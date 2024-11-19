@@ -19,8 +19,11 @@ const categoryModel = connection.define('categories',
       allowNull: true,
       defaultValue: true
     },
+
   },
 );
+
+
 
 module.exports = categoryModel
 

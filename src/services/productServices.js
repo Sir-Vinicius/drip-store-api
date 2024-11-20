@@ -123,4 +123,41 @@ const updateProductLogic = async (productId, productData, images) => {
   }
 }
 
-module.exports = { searchProductsLogic, updateProductLogic, commonIncludes };
+const createProductLogic = async (productData, imagesUrl, categoryIds) => {
+  
+  const product = await productModel.create(productData)
+
+  if (Array.isArray(imagesUrl) && imagesUrl.length > 0) {
+    const images = imagesUrl.map((path) => ({
+      path,
+      productId: product.id,
+    }));
+    await productImageModel.bulkCreate(images);
+  } 
+
+  if (Array.isArray(categoryIds) && categoryIds.length > 0) {
+    const categories = await categoryModel.findAll({
+      where: { id: categoryIds },
+    });
+    await product.addCategories(categories); 
+  }
+
+  return await productModel.findByPk(product.id, {
+    include: [{
+      model: productImageModel,
+      as: 'images',
+      attributes: ['path', 'id'],
+      required: false
+    },
+    {
+      model: categoryModel,
+      as: 'categories',
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      },
+    }
+  ]
+  });
+}
+
+module.exports = { searchProductsLogic, updateProductLogic, commonIncludes, createProductLogic };

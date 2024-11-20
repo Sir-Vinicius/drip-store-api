@@ -3,11 +3,9 @@ const productServices = require('../services/productServices')
 const { commonIncludes }  = require('../services/productServices');
 const create = async (req, res) => {
   try {
-    const product = await productModel.create({
-      ...req.body
-    });
-
-    const productData = product.get({ plain: true });
+    const { imagesUrl = [], category_id = null, ...otherData } = req.body
+    
+    const productData =  await productServices.createProductLogic(otherData, imagesUrl, category_id)
 
     res.status(201).json({
       message: `Produto criado com sucesso`,
@@ -17,7 +15,7 @@ const create = async (req, res) => {
     console.error(error); 
     res.status(400).send({
       message: "Erro ao criar o produto.",
-      error: error.message || error
+      error: error.message 
     });
   }
 }

@@ -1,13 +1,13 @@
+const connection = require("../config/database/connection");
 const productModel = require("../models/productModel")
 const productServices = require('../services/productServices')
 const { commonIncludes }  = require('../services/productServices');
+const { QueryTypes } = require('sequelize');
 const create = async (req, res) => {
   try {
-    const product = await productModel.create({
-      ...req.body
-    });
-
-    const productData = product.get({ plain: true });
+    const { imagesUrl = [], category_id = null, ...otherData } = req.body
+    
+    const productData =  await productServices.createProductLogic(otherData, imagesUrl, category_id)
 
     res.status(201).json({
       message: `Produto criado com sucesso`,
@@ -17,7 +17,7 @@ const create = async (req, res) => {
     console.error(error); 
     res.status(400).send({
       message: "Erro ao criar o produto.",
-      error: error.message || error
+      error: error.message 
     });
   }
 }
@@ -118,7 +118,36 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const getMarksFromProducts = async (req, res) => {
+  try {
+    const marks = await connection.query(
+      `SELECT DISTINCT mark 
+       FROM products 
+       WHERE mark IS NOT NULL 
+         AND mark != 'NaN' 
+         AND mark != ''`,
+      {
+        type: QueryTypes.SELECT
+      }
+    );
+
+    const marksArray = marks.map(item => item.mark);
+
+
+    return res.status(200).json({
+      message: 'Marcas distintas recuperadas com sucesso',
+      data: marksArray,
+    });
+  } catch (error) {
+    console.error('Detailed error:', error);
+    return res.status(500).json({
+      message: 'Erro ao recuperar marcas distintas',
+      error: error.message,
+      stack: error.stack
+    });
+  }
+};
 
 module.exports = {
-  create, getAll, getById, updateProduct, deleteProduct, commonIncludes
+  create, getAll, getById, updateProduct, deleteProduct, commonIncludes, getMarksFromProducts
 }

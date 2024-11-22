@@ -20,8 +20,9 @@ A API foi desenvolvida utilizando as seguintes tecnologias:
 - **Express.js**: Framework utilizado para criar e gerenciar as rotas da API.
 - **Dotenv**: Usado para facilitar a configuração de variáveis de ambiente de forma segura e prática.
 - **Nodemon**: Ferramenta que ajuda na produtividade durante o desenvolvimento, reiniciando automaticamente a aplicação ao detectar mudanças no código.
-- **MySQL**: Banco de dados relacional utilizado para persistência de dados.
-- **Sequelize**: ORM que facilita a interação com o banco de dados MySQL e melhora a produtividade ao manipular dados.
+- **PostgreSQL**: Banco de dados relacional utilizado para persistência de dados.
+- **Sequelize**: ORM que facilita a interação com o banco de dados PostgreSQL
+ e melhora a produtividade ao manipular dados.
 - **JWT (JSON Web Tokens)**: Utilizado para adicionar segurança e controle de acesso às rotas da API, gerenciando a autenticação do usuário.
 - **Joi**: Biblioteca para validação de dados de entrada, garantindo que as informações recebidas na API estejam corretas e completas.
 - **Bcrypt**: Usado para hash de senhas, garantindo que as credenciais dos usuários sejam armazenadas de forma segura.

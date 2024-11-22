@@ -8,7 +8,7 @@ const commonIncludes = [
     model: productImageModel,
     as: 'images',
     attributes: ['path', 'id'],
-    required: false
+    required: true
   },
   {
     model: categoryModel,
@@ -21,7 +21,6 @@ const commonIncludes = [
     }
   }
 ];
-
 
 const searchProductsLogic = async (params) => {
   try {
@@ -133,7 +132,12 @@ const createProductLogic = async (productData, imagesUrl, categoryIds) => {
       productId: product.id,
     }));
     await productImageModel.bulkCreate(images);
-  } 
+  } else {
+    const defaultImage = {
+      productId: product.id,
+    };
+    await productImageModel.create(defaultImage);
+  }
 
   if (Array.isArray(categoryIds) && categoryIds.length > 0) {
     const categories = await categoryModel.findAll({

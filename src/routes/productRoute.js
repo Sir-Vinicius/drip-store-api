@@ -8,9 +8,6 @@ productRouter.get('/',  productController.getAll);
 productRouter.get('/marks', productController.getMarksFromProducts);
 productRouter.put('/:id', authenticateToken, productController.updateProduct);
 productRouter.get('/:id',  productController.getById);
-productRouter.delete('/:id', authenticateToken, productController.deleteProduct)
-
-
-
+productRouter.delete('/:id', authenticateToken, productController.deleteProduct);
 
 module.exports = productRouter;

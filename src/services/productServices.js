@@ -122,8 +122,12 @@ const updateProductLogic = async (productId, productData, images) => {
   }
 }
 
-const createProductLogic = async (productData, imagesUrl, categoryIds) => {
-  
+const createProductLogic = async (productData, imagesUrl, categoryName) => {
+
+  if (!categoryName) {
+    throw {status: 400, message: "Insira uma categoria existente"}
+  }
+
   const product = await productModel.create(productData)
 
   if (Array.isArray(imagesUrl) && imagesUrl.length > 0) {
@@ -139,13 +143,19 @@ const createProductLogic = async (productData, imagesUrl, categoryIds) => {
     await productImageModel.create(defaultImage);
   }
 
-  if (Array.isArray(categoryIds) && categoryIds.length > 0) {
-    const categories = await categoryModel.findAll({
-      where: { id: categoryIds },
+  if (categoryName) {
+    const categories = await categoryModel.findOne({
+      where: {
+        name: {
+          [Op.like]: `%${categoryName}%`
+        }
+      }
     });
-    await product.addCategories(categories); 
+  
+    if (categories) {
+      await product.addCategory(categories);
+    }
   }
-
   return await productModel.findByPk(product.id, {
     include: [{
       model: productImageModel,

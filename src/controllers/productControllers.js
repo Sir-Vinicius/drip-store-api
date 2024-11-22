@@ -5,9 +5,9 @@ const { commonIncludes }  = require('../services/productServices');
 const { QueryTypes } = require('sequelize');
 const create = async (req, res) => {
   try {
-    const { imagesUrl = [], category_id = null, ...otherData } = req.body
+    const { imagesUrl = [], category, ...otherData } = req.body
     
-    const productData =  await productServices.createProductLogic(otherData, imagesUrl, category_id)
+    const productData =  await productServices.createProductLogic(otherData, imagesUrl, category)
 
     res.status(201).json({
       message: `Produto criado com sucesso`,

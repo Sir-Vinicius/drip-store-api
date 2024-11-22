@@ -42,7 +42,7 @@ const productModel = connection.define('products',
     },
     mark: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     model: {
       type: DataTypes.STRING,
@@ -50,11 +50,11 @@ const productModel = connection.define('products',
     },
     colors: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true
+      allowNull: false
     },
     backgrounds: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true
+      allowNull: false
     },
   },
 );

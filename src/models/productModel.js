@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const connection = require('../config/database/connection');
+const  { validateHexColors } = require('../utils/productsColorsValidate');
 const productModel = connection.define('products',
   {
     enabled: {
@@ -50,11 +51,27 @@ const productModel = connection.define('products',
     },
     colors: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "O campo colors deve ser um array de cores hexadecimais"
+        },
+        customValidator(value) {
+          return validateHexColors(value);
+        }
+      }
     },
     backgrounds: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "O campo backgrounds deve ser um array de cores hexadecimais"
+        },
+        isValid(value) {
+          return validateHexColors(value);
+        }
+      }
     },
   },
 );

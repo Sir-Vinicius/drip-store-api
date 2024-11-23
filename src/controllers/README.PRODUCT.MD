@@ -24,13 +24,16 @@ Esta API permite a criação e atualização de produtos, incluindo informaçõe
   "backgrounds": ["#FFFFFF", "#F0F0F0"],
   "imagesUrl": ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
   "category": "Corrida"
-};
+}
+```
 
 ### Atualizar Produtos - PUT 
  **URL**: `http://localhost:3000/products/:id`
 
 
 ### Corpo da Requisição
+
+```json
 {
   
   "name": "Tênis Nike Air Max - Atualizado",
@@ -46,5 +49,5 @@ Esta API permite a criação e atualização de produtos, incluindo informaçõe
     { "content": "https://example.com/new-image.jpg" }
   ]
 }
-
+```
 

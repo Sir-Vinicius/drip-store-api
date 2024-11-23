@@ -71,3 +71,9 @@ O arquivo `package.json` contém alguns scripts úteis para facilitar o desenvol
 * **`npm run db`**: Executa o script que sincroniza o banco de dados com os modelos definidos no Sequelize.
 * **`npm run seed-products`**: Popula o banco de dados com dados de exemplo para os produtos (utilizando o arquivo `productsSeed.js`).
 * **`npm run seed-products-images`**: Popula o banco de dados com imagens de exemplo para os produtos (utilizando o arquivo `productsImageSeed.js`).
+
+## Documentação da API de Produtos
+
+Para detalhes sobre os endpoints e funcionalidades da API de produtos, consulte o documento específico:
+
+[Documentação da API - Gerenciamento de Produtos](src/controllers/README.PRODUCT.MD)
